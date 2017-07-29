@@ -93,10 +93,74 @@ class LearnPandas():
         print(df.iloc[3, 3])
         print(df.iat[3, 2])
 
+        # 逻辑操作
+        print(df[df.B > 0])
+
+        print(df[df > 0])
+
+        df2 = df.copy()
+        df2['E'] = ['one', 'one', 'two', 'three', 'four', 'three']
+        print(df2[df2['E'].isin(['two', 'four'])])
+
+    # 设置DataFrame里面的数据
+    def setData(self, df):
+        # 设置一列
+        today = datetime.date.today()
+        s = pd.Series(range(1, 7), index=pd.date_range(today, periods=6))
+        df['F'] = s
+        print(df)
+
+        df.loc[:, 'D'] = np.array([5] * len(df))
+        print(df)
+
+        # 设置一个数据
+        df.at['2017-07-29', 'B'] = 666.666
+        print(df)
+        df.iat[3, 3] = 888.888
+        print(df)
+
+        #
+        df[df > 0] = -df
+        print(df)
+
+    def missingData(self, df):
+        df1 = df.reindex(index=df.index[0:4], columns=list(df.columns) + ['E'])
+        print(df1)
+        df1.iloc[0:2, 4] = 1
+        print(df1)
+        df1.iloc[0, 3] = np.nan
+        print(df1)
+        print(df1.dropna(how='any'))
+        print(df1.fillna(value=666))
+        print(df1.isnull())
+
+    def stats(self, df):
+        df.loc[:, 'E'] = range(0, len(df))
+        print(df)
+        print(df.mean())
+        print(df.mean(1))
+
+    def applyfun(self, df):
+        df.loc[:, 'E'] = range(0, len(df))
+        print(df)
+        print(df.apply(sum))
+        print(df.apply(np.cumsum))
+        ydf = df.apply(lambda x: x.max() - x.min())
+        print(ydf)
+
+    def plot(self, df):
+        df.plot()
+        plt.show()
+
 
 if __name__ == "__main__":
     lp = LearnPandas()
     # lp.createDataFrame()
     df = lp.createDataFrame()
     # lp.viewDateFrame(df)
-    lp.getData(df)
+    # lp.getData(df)
+    # lp.setData(df)
+    # lp.missingData(df)
+    # lp.stats(df)
+    # lp.applyfun(df)
+    lp.plot(df)
