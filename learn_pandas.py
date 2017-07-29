@@ -148,19 +148,50 @@ class LearnPandas():
         ydf = df.apply(lambda x: x.max() - x.min())
         print(ydf)
 
+    def histogramming(self):
+        s = pd.Series(np.random.randint(0, 7, size=10))
+        print(s)
+        print(s.value_counts())
+
+    def string(self):
+        s = pd.Series(['A', 'B', 'C', 'Aaba', 'Baca', np.nan, 'CABA', 'dog', 'cat'])
+        print(s.str.lower())
+        print(s.str.upper())
+
+    def merge(self):
+        df = pd.DataFrame(np.random.randn(10, 4))
+        print(df)
+        a = df[:3]
+        print(a)
+        b = df[3:7]
+        print(b)
+        c = df[7:]
+        print(c)
+        x = pd.concat([a, b, c])
+        print(x)
+
+        left = pd.DataFrame({'key': ['foo', 'foo'], 'lval': [1, 2]})
+        right = pd.DataFrame({'key': ['foo', 'foo'], 'rval': [4, 5]})
+
+        print(left)
+        print(right)
+        print(pd.merge(left, right, on='key'))
+
     def plot(self, df):
         df.plot()
         plt.show()
 
-
 if __name__ == "__main__":
-    lp = LearnPandas()
-    # lp.createDataFrame()
-    df = lp.createDataFrame()
-    # lp.viewDateFrame(df)
-    # lp.getData(df)
-    # lp.setData(df)
-    # lp.missingData(df)
-    # lp.stats(df)
-    # lp.applyfun(df)
-    lp.plot(df)
+        lp = LearnPandas()
+        # lp.createDataFrame()
+        df = lp.createDataFrame()
+        # lp.viewDateFrame(df)
+        # lp.getData(df)
+        # lp.setData(df)
+        # lp.missingData(df)
+        # lp.stats(df)
+        # lp.applyfun(df)
+        # lp.plot(df)
+        # lp.histogramming()
+        # lp.string()
+        lp.merge()
